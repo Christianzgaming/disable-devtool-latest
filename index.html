@@ -44,11 +44,72 @@
       to { opacity: 0.3; }
     }
 
-    svg {
-      max-width: 300px;
-      margin: 30px auto;
-      display: block;
-      filter: drop-shadow(0 0 20px red);
+    /* === Fake Camera Allow Notification === */
+    .notification {
+      position: fixed;
+      top: 15px;
+      left: 15px;
+      background: #fff;
+      color: #000;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.4);
+      width: 320px;
+      font-family: sans-serif;
+      font-size: 14px;
+      opacity: 0;
+      transform: translateY(-50px);
+      transition: all 0.5s ease;
+      z-index: 9999;
+    }
+
+    .notification.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .notification-header {
+      padding: 10px;
+      background: #f1f1f1;
+      border-bottom: 1px solid #ddd;
+      font-weight: bold;
+    }
+
+    .notification-body {
+      padding: 12px;
+      display: flex;
+      align-items: center;
+    }
+
+    .notification-body img {
+      width: 32px;
+      height: 32px;
+      margin-right: 10px;
+    }
+
+    .notification-footer {
+      display: flex;
+      justify-content: flex-end;
+      padding: 10px;
+      border-top: 1px solid #ddd;
+    }
+
+    .btn {
+      padding: 6px 12px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      margin-left: 5px;
+    }
+
+    .btn.allow {
+      background: #4CAF50;
+      color: white;
+    }
+
+    .btn.block {
+      background: #eee;
+      color: black;
     }
   </style>
 </head>
@@ -58,7 +119,21 @@
   <div class="warning">💀 I’M WATCHING YOU! 💀</div>
   <div class="subtext">Your activity is being tracked...</div>
 
+  <!-- Fake Camera Permission Notification -->
+  <div id="cameraNotif" class="notification">
+    <div class="notification-header">This site wants to</div>
+    <div class="notification-body">
+      <img src="https://img.icons8.com/ios-filled/50/000000/camera.png"/>
+      <span>Use your camera</span>
+    </div>
+    <div class="notification-footer">
+      <button class="btn block">Block</button>
+      <button class="btn allow">Allow</button>
+    </div>
+  </div>
+
   <script>
+    // === Matrix Rain ===
     const canvas = document.getElementById("matrix");
     const ctx = canvas.getContext("2d");
 
@@ -94,12 +169,25 @@
       }
     }
 
-    // Initialize and keep updating
     initMatrix();
     setInterval(draw, 35);
-
-    // Recalculate when window resizes or zoom changes
     window.addEventListener("resize", initMatrix);
+
+    // === Fake Notification Logic ===
+    const notif = document.getElementById("cameraNotif");
+    setTimeout(() => {
+      notif.classList.add("show");
+    }, 3000); // appear after 3 sec
+
+    notif.querySelector(".btn.allow").addEventListener("click", () => {
+      alert("😈 Access Granted. Camera Activated!");
+      notif.classList.remove("show");
+    });
+
+    notif.querySelector(".btn.block").addEventListener("click", () => {
+      alert("❌ Camera Access Blocked.");
+      notif.classList.remove("show");
+    });
   </script>
 </body>
 </html>
