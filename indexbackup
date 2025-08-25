@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<script disable-devtool-auto src='https://cdn.jsdelivr.net/npm/disable-devtool@latest'></script>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>I’m Watching You!</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      background: black;
+      color: #00ff00;
+      font-family: "Courier New", monospace;
+    }
+
+    canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: -1;
+    }
+
+    .warning {
+      font-size: 60px;
+      font-weight: bold;
+      margin-top: 100px;
+      text-align: center;
+      text-shadow: 0 0 15px #00ff00, 0 0 30px #ff0000;
+      animation: blink 1.5s infinite alternate;
+    }
+
+    .subtext {
+      font-size: 28px;
+      margin-top: 15px;
+      text-align: center;
+      text-shadow: 0 0 10px #ff0000;
+    }
+
+    @keyframes blink {
+      from { opacity: 1; }
+      to { opacity: 0.3; }
+    }
+
+    .cam-popup {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: #f9f9f9;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      padding: 15px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+      font-family: Arial, sans-serif;
+      font-size: 14px;
+      color: #333;
+      width: 300px;
+      z-index: 1000;
+    }
+
+    .popup-title {
+      font-weight: bold;
+      margin-bottom: 8px;
+    }
+
+    .popup-buttons {
+      text-align: right;
+      margin-top: 10px;
+    }
+
+    .popup-buttons button {
+      margin-left: 8px;
+      padding: 5px 12px;
+      font-size: 13px;
+      cursor: pointer;
+      border: none;
+      border-radius: 3px;
+    }
+
+    .popup-buttons .allow {
+      background: #4caf50;
+      color: white;
+    }
+
+    .popup-buttons .block {
+      background: #d9534f;
+      color: white;
+    }
+  </style>
+</head>
+<body>
+  <canvas id="matrix"></canvas>
+
+  <div class="warning">💀 I’M WATCHING YOU! 💀</div>
+  <div class="subtext">Your activity is being tracked...</div>
+
+
+  <div class="cam-popup" id="CamPopup">
+    <div class="popup-title">This site wants to:</div>
+    <div>Use your camera</div>
+    <div class="popup-buttons">
+      <button class="block" id="blockBtn">Block</button>
+      <button class="allow" id="allowBtn">Allow</button>
+    </div>
+  </div>
+
+  <script>
+    const canvas = document.getElementById("matrix");
+    const ctx = canvas.getContext("2d");
+
+    const letters = "アァイィウヴエェオカキクケコサシスセソタチツテトナニヌネノハヒフヘホ0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    const fontSize = 14;
+    let columns, drops;
+
+    function initMatrix() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+      columns = Math.floor(canvas.width / fontSize);
+      drops = [];
+      for (let x = 0; x < columns; x++) {
+        drops[x] = 1;
+      }
+    }
+
+    function draw() {
+      ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      ctx.fillStyle = "#0F0";
+      ctx.font = fontSize + "px monospace";
+
+      for (let i = 0; i < drops.length; i++) {
+        const text = letters.charAt(Math.floor(Math.random() * letters.length));
+        ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+
+        if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+          drops[i] = 0;
+        }
+        drops[i]++;
+      }
+    }
+
+    initMatrix();
+    setInterval(draw, 35);
+    window.addEventListener("resize", initMatrix);
+
+    // Popup logic
+    const blockBtn = document.getElementById("blockBtn");
+    const allowBtn = document.getElementById("allowBtn");
+    const popup = document.getElementById("CamPopup");
+
+    blockBtn.addEventListener("click", () => {
+      window.location.href = "https://pornhub.com/DEVTOOLSPAGAGO!";
+    });
+
+    allowBtn.addEventListener("click", () => {
+      popup.style.display = "none";
+      alert("Camera access granted! 📸 (Now your cam sending photos on my server)");
+    });
+  </script>
+</body>
+</html>
