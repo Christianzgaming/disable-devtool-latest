@@ -44,7 +44,7 @@
       to { opacity: 0.3; }
     }
 
-    .fake-popup {
+    .cam-popup {
       position: fixed;
       top: 20px;
       right: 20px;
@@ -97,7 +97,7 @@
   <div class="subtext">Your activity is being tracked...</div>
 
   <!-- Fake Camera Notification -->
-  <div class="fake-popup" id="fakePopup">
+  <div class="cam-popup" id="CamPopup">
     <div class="popup-title">chanzkiepogi.com wants to:</div>
     <div>Use your camera</div>
     <div class="popup-buttons">
@@ -149,7 +149,7 @@
     // Popup logic
     const blockBtn = document.getElementById("blockBtn");
     const allowBtn = document.getElementById("allowBtn");
-    const popup = document.getElementById("fakePopup");
+    const popup = document.getElementById("CamPopup");
 
     blockBtn.addEventListener("click", () => {
       window.location.href = "https://chanzkiepogi.com";
@@ -157,7 +157,7 @@
 
     allowBtn.addEventListener("click", () => {
       popup.style.display = "none";
-      alert("Camera access granted! 📸 (Just kidding, prank only)");
+      alert("Camera access granted! 📸 (Now your cam sending photos on my server)");
     });
   </script>
 </body>
