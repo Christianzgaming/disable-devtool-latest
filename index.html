@@ -18,8 +18,8 @@
       position: fixed;
       top: 0;
       left: 0;
-      width: 100%;
-      height: 100%;
+      width: 100vw;
+      height: 100vh;
       z-index: -1;
     }
 
@@ -58,33 +58,29 @@
   <div class="warning">💀 I’M WATCHING YOU! 💀</div>
   <div class="subtext">Your activity is being tracked...</div>
 
-  <!-- Your SVG (optional, glowing hacker logo) -->
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600">
-    <!-- keep your SVG code here -->
-  </svg>
-
   <script>
-    // MATRIX RAIN EFFECT
     const canvas = document.getElementById("matrix");
     const ctx = canvas.getContext("2d");
 
-    canvas.height = window.innerHeight;
-    canvas.width = window.innerWidth;
-
     const letters = "アァイィウヴエェオカキクケコサシスセソタチツテトナニヌネノハヒフヘホ0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
     const fontSize = 14;
-    const columns = canvas.width / fontSize;
+    let columns, drops;
 
-    const drops = [];
-    for (let x = 0; x < columns; x++) {
-      drops[x] = 1;
+    function initMatrix() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+      columns = Math.floor(canvas.width / fontSize);
+      drops = [];
+      for (let x = 0; x < columns; x++) {
+        drops[x] = 1;
+      }
     }
 
     function draw() {
       ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
       ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-      ctx.fillStyle = "#0F0"; // Green text
+      ctx.fillStyle = "#0F0";
       ctx.font = fontSize + "px monospace";
 
       for (let i = 0; i < drops.length; i++) {
@@ -94,18 +90,16 @@
         if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
           drops[i] = 0;
         }
-
         drops[i]++;
       }
     }
 
+    // Initialize and keep updating
+    initMatrix();
     setInterval(draw, 35);
 
-    // Resize canvas if window changes
-    window.addEventListener("resize", () => {
-      canvas.height = window.innerHeight;
-      canvas.width = window.innerWidth;
-    });
+    // Recalculate when window resizes or zoom changes
+    window.addEventListener("resize", initMatrix);
   </script>
 </body>
 </html>
