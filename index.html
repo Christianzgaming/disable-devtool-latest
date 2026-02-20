@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>⚠️ Don't Open Devtool</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #0b0f1c;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Segoe UI', 'Courier New', monospace, sans-serif;
+            padding: 12px;  /* reduced padding to maximize space */
+        }
+
+        .container {
+            max-width: 760px;     /* slightly narrower for compactness */
+            width: 100%;
+            background: #101624;
+            border: 4px solid #2a3b5c;
+            border-radius: 32px;
+            box-shadow: 0 0 0 2px #1e2a3a, 0 20px 40px rgba(0, 0, 0, 0.8), inset 0 0 30px #1e3a5f;
+            padding: 1.5rem 1.8rem 1.8rem 1.8rem;  /* reduced padding to fit without scroll */
+            text-align: center;
+        }
+
+        /* subtle scanner line — thinner, less vertical space */
+        .scan-line {
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #3d6eff, #ff3b6f, #3d6eff, transparent);
+            margin: 0 auto 18px auto;   /* reduced bottom margin */
+            opacity: 0.5;
+            border-radius: 100%;
+            animation: pulseGlow 3s infinite alternate;
+        }
+
+        @keyframes pulseGlow {
+            0% { opacity: 0.3; box-shadow: 0 0 5px #2a6eff; }
+            100% { opacity: 0.9; box-shadow: 0 0 20px #ff3b6f; }
+        }
+
+        /* main warning message – big but compact */
+        .main-warning {
+            font-size: 3.6rem;        /* slightly smaller to save vertical space */
+            font-weight: 800;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            color: #f2f6ff;
+            background: #0d1324;
+            padding: 0.1rem 0.6rem 0.2rem 0.6rem;
+            display: inline-block;
+            border-radius: 20px;
+            border: 3px solid #3d5a80;
+            box-shadow: 0 0 0 2px #0e1a2b, 0 0 30px #4f8cff;
+            margin-bottom: 0.8rem;      /* reduced */
+            text-shadow: 0 0 8px #3d6eff, 0 0 18px #b03a4a;
+            font-family: 'Courier New', monospace;
+            line-height: 1.2;
+        }
+
+        /* ACTIVITY MONITOR ACTIVE - more compact */
+        .sub-message {
+            font-size: 1.6rem;         /* scaled down */
+            color: #bac8ff;
+            background: #1a2338;
+            padding: 0.5rem 1.5rem;
+            border-radius: 50px;
+            display: inline-block;
+            border: 2px solid #48648c;
+            text-transform: uppercase;
+            font-weight: 500;
+            letter-spacing: 1.5px;
+            box-shadow: inset 0 -2px 0 #2f4168;
+            margin-bottom: 1.2rem;      /* reduced */
+        }
+
+        /* instruction box - tighter padding */
+        .instruction-box {
+            background: #0f1829;
+            border: 3px solid #3b5880;
+            border-radius: 36px;
+            padding: 1.2rem 1.2rem 1.5rem 1.2rem;  /* reduced inner spacing */
+            box-shadow: 0 0 30px #1f3b5c, inset 0 0 10px #1b2b44;
+            margin-top: 0.5rem;
+            text-align: left;
+        }
+
+        .instruction-title {
+            font-size: 1.8rem;          /* smaller */
+            color: #ffd966;
+            font-weight: 600;
+            text-transform: uppercase;
+            border-bottom: 2px dashed #5f7bb3;
+            padding-bottom: 0.4rem;
+            margin-bottom: 0.8rem;
+            letter-spacing: 1px;
+            text-align: center;
+        }
+
+        /* text lines - compact */
+        .text-line {
+            font-size: 1.6rem;          /* scaled down */
+            color: #d3e2ff;
+            margin: 0.7rem 0;            /* reduced vertical gap */
+            padding: 0.5rem 1.2rem;
+            line-height: 1.3;
+            border-left: 4px solid #3d6eff;
+            background: #1b253e;
+            border-radius: 18px;
+            box-shadow: 0 2px 0 #0f1a2d;
+        }
+
+        .text-line strong {
+            color: #ffeda6;
+            background: #2c3f60;
+            padding: 0.2rem 1rem;
+            border-radius: 30px;
+            font-family: 'Courier New', monospace;
+            border: 1px solid #ffb86b;
+            margin: 0 4px;
+            font-weight: bold;
+            display: inline-block;
+            font-size: 1.5rem;
+        }
+
+        .key-combo-line {
+            background: #1f2d4e;
+            border: 2px solid #6e8ec5;
+            border-radius: 50px;
+            padding: 0.8rem 1.5rem;      /* less padding */
+            margin: 0.7rem 0 0.3rem 0;    /* tighter */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .key-combo-line .key {
+            background: #2c3f60;
+            color: #ffeda6;
+            padding: 0.3rem 1.4rem;
+            border-radius: 40px;
+            font-family: 'Courier New', monospace;
+            border: 2px solid #ffb86b;
+            font-size: 1.9rem;            /* adjusted */
+        }
+
+        .key-combo-line .plus {
+            color: #ffd966;
+            font-size: 2.4rem;
+            font-weight: bold;
+        }
+
+        .reset-note {
+            font-size: 1.4rem;             /* smaller */
+            color: #aaccff;
+            text-align: center;
+            background: #142035;
+            padding: 0.4rem 0.8rem;
+            border-radius: 30px;
+            margin: 0.4rem 0 0.2rem 0;
+            display: inline-block;
+            width: auto;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .footer-note {
+            margin-top: 1.2rem;            /* reduced */
+            font-size: 1.3rem;
+            color: #778bb8;
+            border-top: 2px solid #253755;
+            padding-top: 0.8rem;           /* less */
+            text-transform: uppercase;
+            font-weight: 300;
+            letter-spacing: 2px;
+        }
+
+        /* make sure everything fits without scrolling */
+        @media (max-height: 700px) {
+            /* fine-tuning for shorter screens, but container already compact */
+            .main-warning { font-size: 3.2rem; margin-bottom: 0.4rem; }
+            .sub-message { font-size: 1.4rem; margin-bottom: 0.8rem; }
+            .instruction-title { font-size: 1.6rem; }
+            .text-line { font-size: 1.4rem; padding: 0.4rem 1rem; }
+        }
+
+        @media (max-width: 500px) {
+            .main-warning { font-size: 2.6rem; }
+            .key-combo-line .key { font-size: 1.5rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- subtle scan effect (like tracking line) -->
+        <div class="scan-line"></div>
+
+        <!-- DON'T OPEN DEVTOOL (two lines) -->
+        <div class="main-warning">
+            DON'T OPEN<br>DEVTOOL
+        </div>
+
+        <!-- ACTIVITY MONITOR ACTIVE -->
+        <div class="sub-message">
+            ACTIVITY MONITOR ACTIVE
+        </div>
+
+        <!-- instruction box with exact text, compact -->
+        <div class="instruction-box">
+            <div class="instruction-title">
+                YOUTUBE ZOOM CHECK (100%)
+            </div>
+            
+            <!-- If popup appears: turn off extensions first -->
+            <div class="text-line">
+                If popup appears: <strong>turn off extensions first</strong>
+            </div>
+            
+            <!-- Go to YouTube page -->
+            <div class="text-line">
+                Go to YouTube page
+            </div>
+            
+            <!-- Make zoom 100% using: -->
+            <div class="text-line" style="border-left-color: #ffb86b;">
+                Make zoom 100% using:
+            </div>
+            
+            <!-- Ctrl + Scroll Wheel (exact format) -->
+            <div class="key-combo-line">
+                <span class="key">Ctrl</span>
+                <span class="plus">+</span>
+                <span class="key">Scroll Wheel</span>
+            </div>
+            
+            <!-- (or Ctrl + 0 to reset) - minimal note -->
+            <div class="reset-note">
+                (or Ctrl + 0 to reset)
+            </div>
+            
+            <!-- tiny reminder line exactly as requested, smaller -->
+            <div style="font-size: 1.3rem; color: #8ea7d9; margin-top: 1rem; text-align: center; border-top: 1px dashed #3f5b88; padding-top: 0.8rem;">
+                ⚙️ 100% zoom required · devtool stays closed
+            </div>
+        </div>
+
+        <!-- PAGE PROTECTED footer (smaller) -->
+        <div class="footer-note">
+            ⚡ PAGE PROTECTED ⚡
+        </div>
+    </div>
+
+    <!-- No scroll - everything fits in viewport -->
+</body>
+</html>
